@@ -1,0 +1,57 @@
+version: '3.9'
+
+services:
+#--------------------------------------------------------------------------------------------------------------------
+  elasticsearch:
+    image: elasticsearch:$VERSION
+    container_name: elasticsearch
+    hostname: elasticsearch
+    restart: unless-stopped
+    environment:
+      - discovery.type=single-node
+      - ELASTIC_PASSWORD=redes
+    ports:
+      - 9200:9200
+      - 9300:9300
+    volumes:
+      - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - ./data/elasticsearch:/usr/share/elasticsearch/data
+    env_file: .env
+#--------------------------------------------------------------------------------------------------------------------
+  logstash:
+    image: logstash:$VERSION
+    container_name: logstash
+    hostname: logstash
+    restart: unless-stopped
+    volumes:
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+    ports:
+      - 5000-5100:5000-5100
+      - 5000-5100:5000-5100/udp
+      - 12201:12201
+    depends_on:
+      - elasticsearch
+    env_file: .env
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+#--------------------------------------------------------------------------------------------------------------------
+  kibana:
+    image: kibana:$VERSION
+    container_name: kibana
+    hostname: kibana
+    restart: unless-stopped
+    ports:
+      - 5601:5601
+    volumes:
+      - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+    depends_on:
+      - elasticsearch
+    env_file: .env
+#--------------------------------------------------------------------------------------------------------------------
+
+
+networks:
+  default:
+    name: elk
+    external: true

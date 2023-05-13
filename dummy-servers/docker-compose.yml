@@ -1,0 +1,31 @@
+version: "3.9"
+
+
+services:
+  count-logger:
+    image: ubuntu:20.04
+    entrypoint: /bin/bash -c "while true; do date; sleep 1; done"
+    logging:
+      driver: "gelf"
+      options:
+        gelf-address: "udp://localhost:5000"
+        tag: "count-logger"
+        
+  linux-server:
+    build:
+      context: linux-server
+      dockerfile: Dockerfile
+    container_name: linux-server
+    hostname: linux-server
+    ports:
+      - 2222:22
+    logging:
+      driver: "syslog"
+      options:
+        syslog-address: "udp://localhost:5044"
+        tag: "linux-server"
+
+networks:
+  default:
+    name: elk
+    external: true
