@@ -1,0 +1,8 @@
+filebeat.inputs:
+- type: filestream
+  id: postgres-logs-filebeat
+  paths:
+    - /var/lib/postgresql/data/log/*.json
+
+output.logstash:
+  hosts: ["logstash:5013"]
