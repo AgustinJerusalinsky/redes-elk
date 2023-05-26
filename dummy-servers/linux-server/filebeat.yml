@@ -1,0 +1,9 @@
+filebeat.inputs:
+- type: filestream
+  id: filebeat-linux-server-logs
+  paths:
+    - 
+  index: filebeat-linux-server-logs
+
+output.logstash:
+  hosts: ["logstash:5044"]

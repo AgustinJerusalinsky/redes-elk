@@ -6,4 +6,4 @@ filebeat.inputs:
   index: filebeat-postgres-logs
 
 output.logstash:
-  hosts: ["logstash:5013"]
+  hosts: ["logstash:5013", "logstash:5014"]
