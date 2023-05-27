@@ -1,0 +1,8 @@
+- pipeline.id: database-filter
+  path.config: "/usr/share/logstash/pipeline/database-filter.conf"
+
+- pipeline.id: database
+  path.config: "/usr/share/logstash/pipeline/database.conf"
+
+- pipeline.id: linux-server
+  path.config: "/usr/share/logstash/pipeline/linux-server.conf"
