@@ -15,16 +15,18 @@ services:
   #       gelf-address: "udp://localhost:5000"
   #       tag: "linux-server"
 
-  # web-server:
-  #   build: 
-  #     context: web-server
-  #     dockerfile: Dockerfile
-  #   container_name: web-server
-  #   command: uvicorn main:app --host 0.0.0.0 --port 8000
-  #   volumes:
-  #       - ./web-server/app:/app
-  #   ports:
-  #     - 8000:8000
+  web-server:
+    build: 
+      context: web-server
+      dockerfile: Dockerfile
+    container_name: web-server
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@database:5432/postgres
+    volumes:
+        - ./web-server/app:/app
+    ports:
+      - 8000:8000
 
   database:
     build:
@@ -32,7 +34,7 @@ services:
       dockerfile: Dockerfile
     container_name: database
     ports:
-      - 5432:5432
+      - 5431:5432
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
