@@ -9,8 +9,10 @@ RUN curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.
 RUN tar xzvf filebeat-7.17.10-linux-x86_64.tar.gz
 
 COPY filebeat.yml /app/filebeat-7.17.10-linux-x86_64/filebeat.yml
+RUN chmod go-w /app/filebeat-7.17.10-linux-x86_64/filebeat.yml
 COPY entrypoint.sh /app/entrypoint.sh
-
+RUN chown postgres:postgres /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 ENTRYPOINT ["/app/entrypoint.sh"]
 
 #set command
