@@ -40,3 +40,20 @@ async def startup():
 @app.get("/items")
 async def read_all_items():
     return await Items.objects.all()
+
+
+@app.post("/items")
+async def create_item(item: Items):
+    new_item = await item.save()
+    return {"message": "Item created successfully", "item_id": new_item.id}
+
+
+@app.delete("/items/{item_id}")
+async def delete_item(item_id: int):
+    item = await Items.objects.get_or_none(id=item_id)
+    if item:
+        await item.delete()
+        return {"message": f"Item with ID {item_id} deleted successfully"}
+    else:
+        return {"message": "Item not found"}
+
