@@ -1,32 +1,24 @@
 version: "3.9"
 
+networks:
+  default:
+    name: elk
+    external: true
+
 services:
-  linux-server:
-    build:
-      context: linux-server
-      dockerfile: Dockerfile
-    container_name: linux-server
-    hostname: linux-server
-    ports:
-      - 2222:22
+  # linux-server:
+  #   build:
+  #     context: linux-server
+  #     dockerfile: Dockerfile
+  #   container_name: linux-server
+  #   hostname: linux-server
+  #   ports:
+  #     - 2222:22
     # logging:
     #   driver: "gelf"
     #   options:
     #     gelf-address: "udp://localhost:5000"
     #     tag: "linux-server"
-
-  web-server:
-    build: 
-      context: web-server
-      dockerfile: Dockerfile
-    container_name: web-server
-    command: uvicorn main:app --host 0.0.0.0 --port 8000
-    environment:
-      - DATABASE_URL=postgresql://postgres:postgres@database:5432/postgres
-    volumes:
-        - ./web-server/app:/app
-    ports:
-      - 8000:8000
 
   database:
     build:
@@ -42,8 +34,25 @@ services:
     volumes:
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ../logs/database:/app/logs
-    
-networks:
-  default:
-    name: elk
-    external: true
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web-server:
+    build: 
+      context: web-server
+      dockerfile: Dockerfile
+    container_name: web-server
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@database:5432/postgres
+    volumes:
+        - ./web-server/app:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      database:
+        condition: service_healthy
+
