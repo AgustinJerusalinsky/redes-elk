@@ -41,6 +41,7 @@ services:
       POSTGRES_DATABASE: postgres
     volumes:
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ../logs/database:/app/logs
     
 networks:
   default:

@@ -13,6 +13,12 @@ RUN chmod go-w /app/filebeat-7.17.10-linux-x86_64/filebeat.yml
 COPY entrypoint.sh /app/entrypoint.sh
 RUN chown postgres:postgres /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
+RUN mkdir logs && chown -R postgres:postgres logs
+
+# change postgres user uid and guid to 1000
+RUN usermod -u 1000 postgres
+RUN groupmod -g 1000 postgres
+
 ENTRYPOINT ["/app/entrypoint.sh"]
 
 #set command

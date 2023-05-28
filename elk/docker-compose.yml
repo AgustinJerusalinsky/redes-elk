@@ -27,6 +27,7 @@ services:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
       - ./logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
+      - ../logs:/app/logs
     ports:
       - 5000-5100:5000-5100
       - 5000-5100:5000-5100/udp

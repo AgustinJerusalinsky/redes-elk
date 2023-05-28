@@ -1,5 +1,5 @@
-- pipeline.id: database-filter
-  path.config: "/usr/share/logstash/pipeline/database-filter.conf"
+- pipeline.id: database-beat
+  path.config: "/usr/share/logstash/pipeline/database-beat.conf"
 
 - pipeline.id: database
   path.config: "/usr/share/logstash/pipeline/database.conf"
