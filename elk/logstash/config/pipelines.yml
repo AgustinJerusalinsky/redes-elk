@@ -6,3 +6,9 @@
 
 - pipeline.id: linux-server
   path.config: "/usr/share/logstash/pipeline/linux-server.conf"
+
+- pipeline.id: web-server
+  path.config: "/usr/share/logstash/pipeline/web-server.conf"
+
+- pipeline.id: web-server-beat
+  path.config: "/usr/share/logstash/pipeline/web-server-beat.conf"

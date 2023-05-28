@@ -6,4 +6,4 @@ filebeat.inputs:
   index: filebeat-web-server-logs
 
 output.logstash:
-  hosts: ["logstash:5017"]
+  hosts: ["logstash:5020"]
