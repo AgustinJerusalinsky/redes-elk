@@ -2,7 +2,7 @@ filebeat.inputs:
 - type: filestream
   id: filebeat-web-server-logs
   paths:
-    - /app/logs/*.log
+    - /var/log/app/*.log
   index: filebeat-web-server-logs
 
 output.logstash:

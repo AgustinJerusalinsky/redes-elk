@@ -4,11 +4,8 @@ import logging
 import os
 app = FastAPI(title="FastAPI, Docker")
 
-# Get the current directory
-current_directory = os.getcwd()
-
 # Specify the log file path
-log_file_path = os.path.join(current_directory, "logs", "app.log")
+log_file_path = '/var/log/app/app.log'
 
 # Configure logging
 logging.basicConfig(

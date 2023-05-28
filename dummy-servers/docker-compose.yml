@@ -45,12 +45,11 @@ services:
       context: web-server
       dockerfile: Dockerfile
     container_name: web-server
-    command: uvicorn main:app --host 0.0.0.0 --port 8000
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@database:5432/postgres
     volumes:
         - ./web-server/app:/app
-        - ../logs/web-server:/app/logs
+        - ../logs/web-server:/var/log/app
     ports:
       - 8000:8000
     depends_on:
