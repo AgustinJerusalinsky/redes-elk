@@ -1,9 +1,20 @@
-filebeat.inputs:
-- type: filestream
-  id: filebeat-linux-server-logs
-  paths:
-    - 
-  index: filebeat-linux-server-logs
+#disable ilm
+setup.ilm.enabled: false
 
-output.logstash:
-  hosts: ["logstash:5044"]
+setup.template.name: "linux-filebeat"
+setup.template.pattern: "linux-filebeat-*"
+output.elasticsearch:
+  hosts: ["elasticsearch:9200"]
+  index: "linux-filebeat-%{[agent.version]}-%{+yyyy.MM.dd}"
+
+filebeat.modules:
+- module: system
+  syslog:
+    enabled: true
+    var.paths: ["/var/log/syslog*"]
+  auth:
+    enabled: true
+    var.paths: ["/var/log/auth.log*"]
+
+# setup.kibana:
+#   host: "kibana:5601"
