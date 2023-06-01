@@ -33,7 +33,7 @@ winlogbeat.event_logs:
           file: ${path.home}/module/sysmon/config/winlogbeat-sysmon.js
 
   - name: Windows PowerShell
-    event_id: 400, 403, 600, 800
+    event_id: 400, 403, 600, 800, 999
     processors:
       - script:
           lang: javascript
@@ -79,7 +79,7 @@ winlogbeat.event_logs:
 # ------------------------------ Logstash Output -------------------------------
 output.logstash:
   # The Logstash hosts
-  hosts: ["192.168.122.1:5050"]
+  hosts: ["127.0.0.1:5051"]
 
 
 # ================================= Processors =================================

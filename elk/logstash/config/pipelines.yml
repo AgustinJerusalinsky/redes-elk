@@ -13,5 +13,5 @@
 - pipeline.id: web-server-beat
   path.config: "/usr/share/logstash/pipeline/web-server-beat.conf"
   
-- pipeline.id: windows-server
-  path.config: "/usr/share/logstash/pipeline/windows-server.conf"
+- pipeline.id: windows-server-beat
+  path.config: "/usr/share/logstash/pipeline/windows-server-beat.conf"
