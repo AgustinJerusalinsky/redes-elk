@@ -1,4 +1,4 @@
-#disable ilm
+#disable ilm so we can use the index template, if not the index name is managed by filebeat
 setup.ilm.enabled: false
 
 setup.template.name: "linux-filebeat"
@@ -16,6 +16,3 @@ filebeat.modules:
   auth:
     enabled: true
     var.paths: ["/var/log/auth.log*"]
-
-# setup.kibana:
-#   host: "kibana:5601"

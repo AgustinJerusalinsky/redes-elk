@@ -3,7 +3,6 @@ filebeat.inputs:
   id: filebeat-postgres-logs
   paths:
     - /app/logs/*.log
-  index: filebeat-postgres-logs
 
 output.logstash:
   hosts: ["logstash:5013"]

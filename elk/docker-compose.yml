@@ -32,6 +32,10 @@ services:
       timeout: 30s
       retries: 3
     env_file: .env
+    deploy:
+      resources:
+        limits:
+          memory: 8G
 #--------------------------------------------------------------------------------------------------------------------
   logstash:
     image: logstash:$VERSION

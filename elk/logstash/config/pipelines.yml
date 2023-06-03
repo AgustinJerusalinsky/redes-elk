@@ -21,3 +21,6 @@
 
 - pipeline.id: service-unavailable
   path.config: "/usr/share/logstash/pipeline/alerts/service-unavailable-alert.conf"
+
+- pipeline.id: firewall-demo
+  path.config: "/usr/share/logstash/pipeline/alerts/firewall-demo.conf"

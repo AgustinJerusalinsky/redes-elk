@@ -14,11 +14,6 @@ services:
     hostname: linux-server
     ports:
       - 2222:22
-    # logging:
-    #   driver: "gelf"
-    #   options:
-    #     gelf-address: "udp://localhost:5000"
-    #     tag: "linux-server"
 
   database:
     build:

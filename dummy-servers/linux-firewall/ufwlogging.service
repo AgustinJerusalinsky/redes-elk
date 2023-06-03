@@ -1,0 +1,11 @@
+ [Unit]
+ Description=Custom systemd service for ufw logging to logstash.
+
+ [Service]
+ Type=simple
+ ExecStart=bash -c 'tail -f /var/log/ufw.log | nc -u 192.168.122.1 5092'
+ Restart=on-failure
+ RestartSec=5s
+
+ [Install]
+ WantedBy=multi-user.target
