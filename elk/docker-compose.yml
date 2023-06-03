@@ -2,20 +2,35 @@ version: '3.9'
 
 services:
 #--------------------------------------------------------------------------------------------------------------------
+  setup:
+    image: elasticsearch:$VERSION
+    container_name: setup
+    hostname: setup
+    volumes:
+      - ./elasticsearch/setup.sh:/usr/share/elasticsearch/setup.sh:ro
+    entrypoint: bash /usr/share/elasticsearch/setup.sh
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+#--------------------------------------------------------------------------------------------------------------------
   elasticsearch:
     image: elasticsearch:$VERSION
     container_name: elasticsearch
     hostname: elasticsearch
     restart: unless-stopped
     environment:
-      - discovery.type=single-node
-      - ELASTIC_PASSWORD=redes
+      - ELASTIC_PASSWORD=elastic
     ports:
       - 9200:9200
       - 9300:9300
     volumes:
       - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
       - ./data/elasticsearch:/usr/share/elasticsearch/data
+    healthcheck:
+      test: curl --silent localhost:9200/ || exit 1
+      interval: 30s
+      timeout: 30s
+      retries: 3
     env_file: .env
 #--------------------------------------------------------------------------------------------------------------------
   logstash:
@@ -33,7 +48,7 @@ services:
       - 5000-5100:5000-5100/udp
       - 12201:12201
     depends_on:
-      - elasticsearch
+      - setup
     command: --config.reload.automatic 
     env_file: .env
     environment:
@@ -49,7 +64,7 @@ services:
     volumes:
       - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
     depends_on:
-      - elasticsearch
+      - setup
     env_file: .env
 #--------------------------------------------------------------------------------------------------------------------
 

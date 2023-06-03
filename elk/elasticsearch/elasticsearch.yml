@@ -1,2 +1,10 @@
 cluster.name: "docker-cluster"
 network.host: 0.0.0.0
+
+xpack.security.enabled: true
+
+#to ensure that the node will not form a cluster with another node
+discovery.type: single-node
+
+#enable api keys
+xpack.security.authc.api_key.enabled: true

@@ -6,7 +6,8 @@ setup.template.pattern: "linux-filebeat-*"
 output.elasticsearch:
   hosts: ["elasticsearch:9200"]
   index: "linux-filebeat-%{[agent.version]}-%{+yyyy.MM.dd}"
-
+  username: "elastic"
+  password: "elastic"
 filebeat.modules:
 - module: system
   syslog:

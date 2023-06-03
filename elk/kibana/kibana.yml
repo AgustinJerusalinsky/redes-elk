@@ -2,3 +2,13 @@
 server.host: "0.0.0.0"
 server.shutdownTimeout: "5s"
 elasticsearch.hosts: [ "http://elasticsearch:9200" ]
+
+
+#enable security
+elasticsearch.username: "kibana_system"
+elasticsearch.password: "elastic"
+xpack.encryptedSavedObjects.encryptionKey: "ae5e34f70239c2d2634ec7780f38d526a797a2b0095b1128cb4a066b0be110c1"
+
+#enable reporting
+xpack.reporting.enabled: true
+xpack.reporting.roles.enabled: false
