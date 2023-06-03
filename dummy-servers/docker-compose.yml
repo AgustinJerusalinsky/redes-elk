@@ -56,3 +56,17 @@ services:
       database:
         condition: service_healthy
 
+  beat:
+    build:
+      context: beat
+      dockerfile: Dockerfile
+    container_name: beat
+    environment:
+      - DATABASE_SERVER=database
+      - LINUX_SERVER=linux-server
+      - WEB_SERVER=web-server
+    logging:
+      driver: "gelf"
+      options:
+        gelf-address: "udp://localhost:5091"
+        tag: "beat"
