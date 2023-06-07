@@ -11,10 +11,10 @@ check_service() {
     fi
 }
 
-# heart beat cada 15s con 1s de timeout
+# heart beat cada 5s con 1s de timeout
 while true; do
     check_service $DATABASE_SERVER 5432
     check_service $LINUX_SERVER 22
     check_service $WEB_SERVER 8000
-    sleep 15
+    sleep 5
 done

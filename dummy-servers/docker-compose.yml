@@ -65,3 +65,10 @@ services:
       options:
         gelf-address: "udp://localhost:5091"
         tag: "beat"
+
+  attacker:
+    build:
+      context: attacker
+      dockerfile: Dockerfile
+    container_name: attacker
+    
